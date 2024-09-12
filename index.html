@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Screen UI</title>
+    <title>Pyrrho UI and Encoding Process</title>
     <style>
         body, html {
             margin: 0;
@@ -20,18 +20,15 @@
                 rgba(255, 255, 255, 0.85) 75%
             );
         }
-
         .container {
             display: flex;
             flex-direction: column;
         }
-
         .row {
             display: flex;
             justify-content: center;
             margin: 10px;
         }
-
         .tile {
             width: 100px;
             height: 100px;
@@ -44,20 +41,66 @@
             margin: 10px;
             transition: transform 0.2s ease-in-out;
             border: 1px solid rgba(128, 128, 128, 0.1);
+            cursor: pointer;
         }
-
         .tile:hover {
             transform: scale(1.1);
         }
-
         .tile img {
             width: 30px;
             height: 30px;
         }
+        #encoding-process {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .process-step {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+        .arrow {
+            text-align: center;
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        .highlight {
+            background-color: #ffffd0;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .substep {
+            margin-left: 20px;
+            font-size: 0.9em;
+        }
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .back-button:hover {
+            background-color: #e0e0e0;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div id="main-screen" class="container">
         <div class="row">
             <div class="tile">
                 <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="Person Icon">
@@ -70,10 +113,90 @@
             <div class="tile">
                 <img src="https://img.icons8.com/ios-filled/50/000000/fire-element.png" alt="Flame Icon">
             </div>
-            <div class="tile">
+            <div class="tile" onclick="showEncodingProcess()">
                 <img src="https://img.icons8.com/ios-filled/50/000000/help.png" alt="Help Icon">
             </div>
         </div>
     </div>
+
+    <div id="encoding-process">
+        <button class="back-button" onclick="hideEncodingProcess()">← Back</button>
+        <h1>Pyrrho Encoding Process Visualization</h1>
+        
+        <div class="process-step">
+            <h2>1. Initialization</h2>
+            <p>Load n-gram dictionary and connection data</p>
+        </div>
+        
+        <div class="arrow">↓</div>
+        
+        <div class="process-step">
+            <h2>2. Message Preparation</h2>
+            <div class="substep">
+                <p>2.1. Clean message (remove whitespace and pipe characters)</p>
+                <p>2.2. Parse message into words</p>
+            </div>
+        </div>
+        
+        <div class="arrow">↓</div>
+        
+        <div class="process-step">
+            <h2>3. Word Processing</h2>
+            <div class="substep">
+                <p>3.1. Attempt to encode full words</p>
+                <p>3.2. If needed, process L-1 substrings</p>
+                <p>3.3. For complex cases, use sliding frame encoding</p>
+            </div>
+        </div>
+        
+        <div class="arrow">↓</div>
+        
+        <div class="process-step">
+            <h2>4. Block Formation</h2>
+            <div class="substep">
+                <p>4.1. Group encoded words into proto-blocks</p>
+                <p>4.2. Extract spaces data</p>
+                <p>4.3. Combine spaces data with proto-blocks</p>
+                <p>4.4. Append decimal values for spaces</p>
+            </div>
+        </div>
+        
+        <div class="arrow">↓</div>
+        
+        <div class="process-step">
+            <h2>5. Block Ordering</h2>
+            <p>Add order information to blocks</p>
+        </div>
+        
+        <div class="arrow">↓</div>
+        
+        <div class="process-step">
+            <h2>6. Encryption</h2>
+            <div class="substep">
+                <p>6.1. Perform Fisher-Yates shuffle on dictionary codes</p>
+                <p>6.2. Substitute shuffled codes</p>
+                <p>6.3. Apply modular arithmetic cipher</p>
+            </div>
+        </div>
+        
+        <div class="arrow">↓</div>
+        
+        <div class="process-step">
+            <h2>7. Final Output</h2>
+            <p>Return array of encrypted message blocks as strings</p>
+        </div>
+    </div>
+
+    <script>
+        function showEncodingProcess() {
+            document.getElementById('main-screen').style.display = 'none';
+            document.getElementById('encoding-process').style.display = 'block';
+        }
+
+        function hideEncodingProcess() {
+            document.getElementById('encoding-process').style.display = 'none';
+            document.getElementById('main-screen').style.display = 'flex';
+        }
+    </script>
 </body>
 </html>
